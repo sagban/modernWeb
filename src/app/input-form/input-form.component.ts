@@ -10,41 +10,28 @@ import { Router } from "@angular/router";
 })
 
 export class InputFormComponent implements OnInit {
-
-  registered = false;
-  submitted = false;
   userForm: FormGroup;
 
+  dummyTest:any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(){
-
     this.userForm = this.formBuilder.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]],
+    city: ['', Validators.required],
+    expert: ['', Validators.required],
+    });
+    this.http.post('http://localhost:3000/api/', {}).subscribe((res: any)=>{
+      console.log(res.data.doctors, "response");
+      this.dummyTest = res.data.doctors;
     });
   }
 
   onSubmit(){
-
-    this.submitted = true;
     let data: any = Object.assign( this.userForm.value);
-
-    // this.http.get("https://www.w3schools.com/angular/customers.php").subscribe((res:any)=>{
-    //   console.log(res);
-    // });
-
-    if(this.userForm.invalid === true) {
-      return ;
-    }
-  	else{
-      this.http.post('/api/', data).subscribe((res: any)=>{
-          console.log(res, "response");
-        });
-        this.registered = true;
-      }
+    this.http.post('http://localhost:3000/api/', data).subscribe((res: any)=>{
+      console.log(res.data.doctors, "response");
+      this.dummyTest = res.data.doctors;
+    });
   }
 }

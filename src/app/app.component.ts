@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Modern Angular 7.2 + Node Based Application';
+  title = 'Search Doctors Nearby';
 }
